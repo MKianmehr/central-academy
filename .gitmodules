@@ -1,0 +1,6 @@
+[submodule "central-academy-client"]
+	path = central-academy-client
+	url = ./central-academy-client
+[submodule "central-academy-backend"]
+	path = central-academy-backend
+	url = ./central-academy-backend
