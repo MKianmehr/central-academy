@@ -1,6 +1,6 @@
 [submodule "central-academy-client"]
 	path = central-academy-client
-	url = ./central-academy-client
+	url = git@github.com:MKianmehr/central-academy-client.git
 [submodule "central-academy-backend"]
 	path = central-academy-backend
-	url = ./central-academy-backend
+	url = git@github.com:MKianmehr/central-academy-backend.git
