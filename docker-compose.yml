@@ -1,0 +1,29 @@
+version: '3'
+services:
+  nginx:
+    depends_on:
+      - backend
+      - frontend
+    restart: always
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./nginx
+    ports:
+      - '80:80'
+  backend:
+    depends_on:
+      - mongo
+    build:
+      dockerfile: Dockerfile
+      context: ./central-academy-backend
+    env_file:
+      - backend.env
+  frontend:
+    build:
+      dockerfile: Dockerfile
+      context: ./central-academy-client
+    env_file:
+      - frontend.env
+  mongo:
+    image: mongo
+    restart: always
