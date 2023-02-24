@@ -11,8 +11,6 @@ services:
     ports:
       - '80:80'
   backend:
-    depends_on:
-      - mongo
     build:
       dockerfile: Dockerfile
       context: ./central-academy-backend
@@ -24,6 +22,3 @@ services:
       context: ./central-academy-client
     env_file:
       - frontend.env
-  mongo:
-    image: mongo
-    restart: always
