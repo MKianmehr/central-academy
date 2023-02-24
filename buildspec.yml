@@ -1,0 +1,28 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      # Install Docker Compose
+      curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+      chmod +x /usr/local/bin/docker-compose
+  pre_build:
+    commands:
+      # Login to Amazon ECR
+      aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 190527186601.dkr.ecr.us-east-1.amazonaws.com
+
+  build:
+    commands:
+      # Use Docker Compose to build and tag images
+      docker-compose build
+      docker tag cacademy:$CODEBUILD_RESOLVED_SOURCE_VERSION 190527186601.dkr.ecr.us-east-1.amazonaws.com/cacademy:$CODEBUILD_RESOLVED_SOURCE_VERSION
+  post_build:
+    commands:
+      # Push images to Amazon ECR
+      docker push 190527186601.dkr.ecr.us-east-1.amazonaws.com/cacademy:$CODEBUILD_RESOLVED_SOURCE_VERSION
+      # Create image definitions file for use in CodeDeploy
+      printf '[{"name":"cacademy","imageUri":"%s"}]' 190527186601.dkr.ecr.us-east-1.amazonaws.com/cacademy:$CODEBUILD_RESOLVED_SOURCE_VERSION > imagedefinitions.json
+
+artifacts:
+  files:
+    - imagedefinitions.json
