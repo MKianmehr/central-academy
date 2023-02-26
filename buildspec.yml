@@ -12,11 +12,18 @@ phases:
       # Login to Amazon ECR
       - rsapub=$(aws ssm get-parameter --name id_rsa.pub --with-decryption --query "Parameter.Value")
       - rsa=$(aws ssm get-parameter --name id_rsa --with-decryption --query "Parameter.Value")
-      - echo $rsa
-      - echo $rsapub
+      - mkdir -p ~/.ssh
+      - chmod 700 ~/.ssh
+      - echo "$rsa" > ~/.ssh/id_rsa
+      - chmod 600 ~/.ssh/id_rsa
+      - ssh-keygen -F github.com || ssh-keyscan github.com >>~/.ssh/known_hosts
+      - git init
+      - git remote add origin git@github.com:MKianmehr/central-academy.git
+      - git fetch
+      - git submodule init
+      - git submodule update --recursive
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 190527186601.dkr.ecr.us-east-1.amazonaws.com
       - echo 'login to ecr'
-      - git submodule update --init --recursive
       - echo 'submodules fetched'
 
   build:
