@@ -14,14 +14,11 @@ phases:
       - mkdir -p ~/.ssh
       - chmod 700 ~/.ssh
       - echo "$rsa"
-      - echo "$rsa" > ~/.ssh/id_rsa
-      - chmod 600 ~/.ssh/id_rsa
-      - echo "testtttt"
-      - cat ~/.ssh/id_rsa
+      - echo "$rsa" > ~/.ssh/id_ed25519
+      - chmod 600 ~/.ssh/id_ed25519
       - eval "$(ssh-agent -s)"
-      - ssh-keygen -y -f ~/.ssh/id_rsa
-      - ssh-add ~/.ssh/id_rsa
-      - chmod 400 ~/.ssh/id_rsa
+      - ssh-add ~/.ssh/id_ed25519
+      - chmod 400 ~/.ssh/id_ed25519
       - git init
       - git config --global init.defaultBranch main
       - git remote add origin git@github.com:MKianmehr/central-academy.git
