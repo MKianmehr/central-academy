@@ -8,8 +8,10 @@ env:
 phases:
   install:
     commands:
-      - echo "rsa $id_rsa"
-      - echo "rsa.pub {{ssm:id_rsa.pub}}"
+      - aws ssm get-parameters --names "$id_rsa" "$id_rsapub" --with-decryption --query "Parameters[*].Value" --output text > params.txt
+      - export $(cat params.txt | xargs)
+      - echo "$id_rsa"
+      - echo "$id_rsapub"
 
       # Install Docker Compose
       - curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
