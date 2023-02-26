@@ -1,5 +1,8 @@
 version: 0.2
 
+env:
+  git-credential-helper: yes
+
 phases:
   install:
     commands:
@@ -12,9 +15,7 @@ phases:
       # Login to Amazon ECR
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 190527186601.dkr.ecr.us-east-1.amazonaws.com
       - echo 'login to ecr'
-      - pwd
-      - ls
-      - git submodule update --init
+      - git submodule update --init --recursive
       - echo 'submodules fetched'
 
   build:
