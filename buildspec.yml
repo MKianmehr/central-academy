@@ -1,17 +1,8 @@
 version: 0.2
 
-env:
-  parameter-store:
-    id_rsa: "id_rsa"
-    id_rsapub: "id_rsa.pub"
-
 phases:
   install:
     commands:
-      - aws ssm get-parameters --names "$id_rsa" "$id_rsapub" --with-decryption --query "Parameters[*].Value" --output text > params.txt
-      - export $(cat params.txt | xargs)
-      - echo "$id_rsa"
-      - echo "$id_rsapub"
       # Install Docker Compose
       - curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
       - chmod +x /usr/local/bin/docker-compose
@@ -21,6 +12,9 @@ phases:
       # Login to Amazon ECR
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 190527186601.dkr.ecr.us-east-1.amazonaws.com
       - echo 'login to ecr'
+      - rsapub=$(aws ssm get-parameter --name id_rsa.pub --with-decryption --query "Parameter.Value")
+      - rsa=$(aws ssm get-parameter --name id_rsa --with-decryption --query "Parameter.Value")
+      - echo $rsa
       - git submodule update --init --recursive
       - echo 'submodules fetched'
   build:
