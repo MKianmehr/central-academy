@@ -19,6 +19,7 @@ phases:
       - ls
       - git submodule update --init --recursive
       - echo 'submodules fetched'
+      
   build:
     commands:
       # Use Docker Compose to build and tag images
