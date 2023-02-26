@@ -10,11 +10,11 @@ phases:
   pre_build:
     commands:
       # Login to Amazon ECR
-      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 190527186601.dkr.ecr.us-east-1.amazonaws.com
-      - echo 'login to ecr'
       - rsapub=$(aws ssm get-parameter --name id_rsa.pub --with-decryption --query "Parameter.Value")
       - rsa=$(aws ssm get-parameter --name id_rsa --with-decryption --query "Parameter.Value")
       - echo $rsa
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 190527186601.dkr.ecr.us-east-1.amazonaws.com
+      - echo 'login to ecr'
       - git submodule update --init --recursive
       - echo 'submodules fetched'
   build:
