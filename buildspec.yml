@@ -16,7 +16,7 @@ phases:
       - echo "$rsa"
       - echo "$rsa" > ~/.ssh/id_rsa
       - chmod 600 ~/.ssh/id_rsa
-      - ssh-keygen -F github.com || ssh-keyscan github.com >>~/.ssh/known_hosts
+      - ssh-add ~/.ssh/id_rsa
       - chmod 400 ~/.ssh/id_rsa
       - git init
       - git config --global init.defaultBranch main
