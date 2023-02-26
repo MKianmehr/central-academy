@@ -17,7 +17,7 @@ phases:
       - echo "$rsa" > ~/.ssh/id_rsa
       - chmod 600 ~/.ssh/id_rsa
       - echo "testtttt"
-      - echo ~/.ssh/id_rsa
+      - echo "$~/.ssh/id_rsa"
       - eval "$(ssh-agent -s)"
       - ssh-add ~/.ssh/id_rsa
       - chmod 400 ~/.ssh/id_rsa
