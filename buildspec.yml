@@ -8,8 +8,8 @@ env:
 phases:
   install:
     commands:
-      - echo "rsa: {{ssm:id_rsa}}"
-      - echo "rsa.pub: {{ssm:id_rsa.pub}}"
+      - echo "rsa {{ssm:id_rsa}}"
+      - echo "rsa.pub {{ssm:id_rsa.pub}}"
 
       # Install Docker Compose
       - curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
