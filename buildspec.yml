@@ -10,7 +10,6 @@ phases:
   pre_build:
     commands:
       # Login to Amazon ECR
-      - rsapub=$(aws ssm get-parameter --name id_rsa.pub --with-decryption --query "Parameter.Value")
       - rsa=$(aws ssm get-parameter --name id_rsa --with-decryption --query "Parameter.Value")
       - mkdir -p ~/.ssh
       - chmod 700 ~/.ssh
@@ -21,6 +20,7 @@ phases:
       - git init
       - git config --global init.defaultBranch main
       - git remote add origin git@github.com:MKianmehr/central-academy.git
+      - ssh -T git@github.com
       - git fetch
       - git submodule init
       - git submodule update --recursive
