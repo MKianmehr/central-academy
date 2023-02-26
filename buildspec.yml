@@ -14,6 +14,7 @@ phases:
       - echo 'login to ecr'
       - git submodule update --init
       - echo 'submodules fetched'
+      
   build:
     commands:
       # Use Docker Compose to build and tag images
