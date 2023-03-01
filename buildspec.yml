@@ -10,14 +10,8 @@ phases:
   pre_build:
     commands:
       # Login to Amazon ECR
-      - rsa=$(aws ssm get-parameter --name id_rsa --with-decryption --query "Parameter.Value")
-      - mkdir -p ~/.ssh
-      - echo "$rsa"
-      - echo "$rsa" > ~/.ssh/id_ed25519
-      - chmod 600 ~/.ssh/id_ed25519
-      - eval "$(ssh-agent -s)"
-      - ssh-add ~/.ssh/id_ed25519
-      - chmod 400 ~/.ssh/id_ed25519
+      - aws codebuild import-source-credentials --connection ca
+      - echo ca get
       - git init
       - git config --global init.defaultBranch main
       - git remote add origin git@github.com:MKianmehr/central-academy.git
